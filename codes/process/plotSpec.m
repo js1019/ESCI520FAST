@@ -1,0 +1,17 @@
+function plotSpec(tNew, T, f, series, powerDown)
+figure
+subplot(2,1,1)
+plot(tNew, series)
+title('Time Series')
+xlabel('Time (s)')
+ylabel('Amplitude')
+subplot(2,1,2)
+imagesc(T,f,log(powerDown))
+set(gca,'YDir','normal')
+colorbar('southoutside')
+colormap('jet')
+title('Spectrogram')
+xlabel('Time (s)')
+ylabel('Frequency (Hz)')
+caxis([-2 2])
+end

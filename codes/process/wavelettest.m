@@ -13,9 +13,9 @@ x = log(sSample);
 
 % wavelet decomposition
 % wavelet level
-N = 1;
+N = 2;
 [c0,s]=wavedec2(x,N,'haar');
-figure; imagesc(reshape(c0,nx,ny));
+%figure; imagesc(reshape(c0,nx,ny));
 % reconstruction
 xrec0 = waverec2(c0,s,'haar');
 
