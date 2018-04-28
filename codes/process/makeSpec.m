@@ -22,6 +22,7 @@ powerDown = downsample(power,n);
 
 % Calculate time vector for spectrogram
 T = t+tc(1);
+dt = T(2)-T(1);
 
 % Plot original time series and spectrogram
 % Spectrogram amplitude shown on log scale
