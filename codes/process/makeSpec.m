@@ -31,9 +31,10 @@ plotSpec(tNew, T, f, series, powerDown)
 
 % Dividing the spectrogram into spectral images
 % To get a single spectral image, specify first index
-windowNum = floor((size(powerDown,2)-specWindowLength)/specOverlapLength);
+lag = specWindowLength-specOverlapLength;
+windowNum = floor((size(powerDown,2)-specWindowLength)/lag);
 for n = 1:windowNum
-    specWindows(n,:,:) = powerDown(:,(n-1)*specOverlapLength+1:(n-1)*specOverlapLength+specWindowLength);
+    specWindows(n,:,:) = powerDown(:,(n-1)*lag+1:(n-1)*lag+specWindowLength);
 end
 
 % Time associated with each spectral image
