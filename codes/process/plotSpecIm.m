@@ -6,6 +6,6 @@ colorbar()
 colormap('jet')
 xlabel('Time (s)')
 ylabel('Frequency (Hz)')
-caxis([-2 2])
+caxis([-5 5])
 title('Sample Spectral Image')
 end
