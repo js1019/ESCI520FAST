@@ -40,5 +40,8 @@ c2(c0>thred) = 1;
 c2(c0<-thred) = -1;
 % number of nonzeros
 sum(abs(c2)==1)
+%**********************************
+% c2: modified wavelet coefficients
+%**********************************
 figure; imagesc(reshape(c2,nx,ny));
 
