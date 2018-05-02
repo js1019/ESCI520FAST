@@ -23,14 +23,15 @@ Next, Yoon et al. downsample the spectrogram so that it has only 32 frequency bi
 Yoon et al. separate the spectrogram into what they call "spectral images" by dividing it into overlapping windows in the time domain. They used 100 samples per spectral image, with a lag of 10 samples, which means an overlap of 90 samples. In other words, they had windows 10 seconds long, with a lag of 1 second. We used windows of 128 samples, with a lag of 5 samples, which means an overlap of 123 samples. We end up with windows that are 0.512 s long, with a lag of 0.02 s. This gives a total of 969 spectral images.
 % \newline
 
-Yoon et al. downsample each spectral image in the time domain to 64 samples. We also downsample to 64 samples in the time domain, leaving spectral images with dimensions 32 samples by 64 samples. Each of these dimensions must be a power of 2 for the wavelet transform, which is performed next, to work. A sample spectral image is shown in Figure \ref{fig:specim}. 
-\begin{figure}
+Yoon et al. downsample each spectral image in the time domain to 64 samples. We also downsample to 64 samples in the time domain, leaving spectral images with dimensions 32 samples by 64 samples. Each of these dimensions must be a power of 2 for the wavelet transform, which is performed next, to work. 
+A sample spectral image is shown in Figure \ref{fig:specim}. 
+\begin{figure*}
 	\centering
 %\epsfysize=50mm 
 \includegraphics[width=0.7\textwidth]{sampleSpectrogram}
 \caption{(Upper figure) Original continuous time series data. (Lower figure) Spectrogram created using the STFT of the continuous time series data. Amplitude is plotted on a log scale. The vertical component was used here.}
 \label{fig:spec}
-\end{figure}
+\end{figure*}
 
 \begin{figure}
 	\centering
