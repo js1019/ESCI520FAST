@@ -45,3 +45,15 @@ sum(abs(c2)==1)
 %**********************************
 figure; imagesc(reshape(c2,nx,ny));
 
+cnew0 = reshape(c2,nx,ny);
+cnew1 = zeros(nx*2,ny); 
+ct = zeros(nx,ny); cs = zeros(nx,ny);
+
+ct(cnew0<0.5) = 0; 
+ct(cnew0>0.5) = 1; 
+cnew1(1:2:nx*2-1,:) = ct;
+cs(cnew0>-0.5) = 0;
+cs(cnew0==-1) = 1; 
+cnew1(2:2:nx*2,:) = cs;
+figure; imagesc(cnew1)
+
