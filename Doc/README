@@ -1,4 +1,5 @@
-type make to generate pdf
-
+type make to generate pdf  
 before you push it the repository, please type make clean   
-   
+
+tips: 
+you can use "pdflatex --shell-escape ESCI520FAST.tex" to generate pdf from eps figures.  
