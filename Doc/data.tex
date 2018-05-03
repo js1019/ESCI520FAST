@@ -1,6 +1,6 @@
 % data processing
 \section{Data processing}
-This section describes data processing of the microseismic continuous time series of seismic data in order to perform the FAST algorithm described in the paper by Yoon et al, 2015 \cite{yoon2015earthquake}. 
+This section describes data processing of the microseismic continuous time series of seismic data to perform the FAST algorithm described in the paper by Yoon et al., 2015 \cite{yoon2015earthquake}. 
 %\newline
 
 First, Yoon et al., 2015 downsample their continuous time series data from 100 samples/second to 20 samples/second. This makes the Nyquist frequency of their time series 10 Hz. We downsample our continuous time series as well, but not to the same Nyquist frequency as the paper. Our time series is the result of microseismic activity, and it has higher frequency content than the macroseismic data used by Yoon et al. We downsample from 1000 samples/second to 500 samples/second. This leaves us with a Nyquist frequency of 250 Hz. 
@@ -17,26 +17,46 @@ Yoon et al. take the short time Fourier transform (STFT) of the time series by c
 Finally, Yoon et al. generate the spectrogram by calculating the power of the STFT. In other words, they calculate the squared amplitude of the complex-valued STFT. We do the same thing with our STFT.
 %\newline
 
-Next, Yoon et al. downsample the spectrogram so that it has only 32 frequency bins. We do the same thing to our spectrogram. In order to do a successful wavelet transform later, the number of frequency bins needs to be a power of 2. The spectrogram computed from the continuous time series data is shown in Figure \ref{fig:spec}.
+Next, Yoon et al. downsample the spectrogram so that it has only 32 frequency bins. We do the same thing to our spectrogram. To do a successful wavelet transform later, the number of frequency bins needs to be a power of 2. The spectrogram computed from the continuous time series data is shown in Figure \ref{fig:spec}.
 % \newline
 
 Yoon et al. separate the spectrogram into what they call "spectral images" by dividing it into overlapping windows in the time domain. They used 100 samples per spectral image, with a lag of 10 samples, which means an overlap of 90 samples. In other words, they had windows 10 seconds long, with a lag of 1 second. We used windows of 128 samples, with a lag of 5 samples, which means an overlap of 123 samples. We end up with windows that are 0.512 s long, with a lag of 0.02 s. This gives a total of 969 spectral images.
 % \newline
 
 Yoon et al. downsample each spectral image in the time domain to 64 samples. We also downsample to 64 samples in the time domain, leaving spectral images with dimensions 32 samples by 64 samples. Each of these dimensions must be a power of 2 for the wavelet transform, which is performed next, to work. 
-A sample spectral image is shown in Figure \ref{fig:specim}. 
+%A sample spectral image is shown in Figure \ref{fig:specim}. 
+
+Following the paper, we then compute the two-dimensional Haar wavelet transform of the spectral image and obtain its wavelet coefficients. 
+Figure~\ref{fig:feature}(a) shows one spectral image from Figure~\ref{fig:spec}, Figure~\ref{fig:feature}(b) shows the original Haar wavelet coefficients. In Figure~\ref{fig:feature}(c), we choose top 800 of total 2048 coefficients and present them with their signs. We also note that these top 800 Haar wavelets can reconstruct the original image very well with less than 2\% relative errors. 
+It indicates that the sparse pattern in the wavelet domain can represent the original signal. 
+We extract the fingerprints in Figure~\ref{fig:feature}(d) using two bits: -1 $\rightarrow$ 01, 0 $\rightarrow$ to 00, 1 $\rightarrow$ 10. 
+
 \begin{figure*}
 	\centering
-%\epsfysize=50mm 
-\includegraphics[width=0.7\textwidth]{sampleSpectrogram}
-\caption{(Upper figure) Original continuous time series data. (Lower figure) Spectrogram created using the STFT of the continuous time series data. Amplitude is plotted on a log scale. The vertical component was used here.}
-\label{fig:spec}
+	%\epsfysize=50mm 
+	\includegraphics[width=0.7\textwidth]{sampleSpectrogram}
+	\caption{(Upper figure) Original continuous time series data. (Lower figure) Spectrogram created using the STFT of the continuous time series data. Amplitude is plotted on a log scale. The vertical component was used here.}
+	\label{fig:spec}
 \end{figure*}
+
+%\begin{figure}
+%    \centering
+%%\epsfysize=50mm 
+%\includegraphics[width=0.5\textwidth]{sampleSpectralImage}
+%\caption{Sample spectral image taken from the spectrogram.}
+%\label{fig:specim}
+%\end{figure}
+
 
 \begin{figure}
 	\centering
-%\epsfysize=50mm 
-\includegraphics[width=0.5\textwidth]{sampleSpectralImage}
-\caption{Sample spectral image taken from the spectrogram.}
-\label{fig:specim}
+	\begin{tabular}{cc}
+		\includegraphics[width=0.5\textwidth]{sSample} & 
+		\includegraphics[width=0.5\textwidth]{orghwlet}  \\
+		(a) & (b) \\
+		\includegraphics[width=0.5\textwidth]{cuthwlet} & 
+		\includegraphics[width=0.5\textwidth]{fingerprints}  \\
+		(c) & (d)
+	\end{tabular}
+	\caption{Feature extraction from spectral image to its binary fingerprint. (a) Spectral image from one event in Figure~\ref{fig:spec}. (b) Original Haar wavelet coefficients. (C) Sign of top standardized Haar coefficients after data compression. (D) Binary fingerprint. }\label{fig:feature}
 \end{figure}
